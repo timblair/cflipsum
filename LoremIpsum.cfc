@@ -4,13 +4,11 @@
 		I use the XML feed from lipsum.com to generate random placeholder text for testing and wireframing
 	</responsibilities>
 	<properties>
-		<property name="version" value="">
-		<property name="lastcheckin" value="">
-		<history author="Tim Blair" date="{d '2008-09-29'}" email="tblair@globalpersonals.co.uk" type="create" />
-		<history author="Tim Blair" date="{d '2008-09-30'}" email="tblair@globalpersonals.co.uk" type="modify">
+		<history author="Tim Blair" date="{d '2008-09-29'}" email="tim@bla.ir" type="create" />
+		<history author="Tim Blair" date="{d '2008-09-30'}" email="tim@bla.ir" type="modify">
 			Added local cache option
-		</history>
-		<history author="Tim Blair" date="{d '2008-10-29'}" email="tblair@globalpersonals.co.uk" type="modify">
+		</history> 
+		<history author="Tim Blair" date="{d '2008-10-29'}" email="tim@bla.ir" type="modify">
 			Retro-fitted for pre-CF8 compatibility
 		</history>
 	</properties>
