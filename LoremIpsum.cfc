@@ -10,22 +10,28 @@
 		<history author="Tim Blair" date="{d '2008-09-30'}" email="tblair@globalpersonals.co.uk" type="modify">
 			Added local cache option
 		</history>
+		<history author="Tim Blair" date="{d '2008-10-29'}" email="tblair@globalpersonals.co.uk" type="modify">
+			Retro-fitted for pre-CF8 compatibility
+		</history>
 	</properties>
 </fusedoc>
 --->
 
 <cfcomponent output="no" hint="I use the XML feed from lipsum.com to generate random placeholder text for testing and wireframing">
 
-	<cfset this.version = "0.2">
-	<cfset this.feed_url = "http://www.lipsum.com/feed/xml">
-	<cfset variables.instance = {
-		start_with_lorem_ipsum = TRUE,
-		use_local_cache        = FALSE,
-		cache                  = {}
-	}>
+	<cfscript>
+		// basic settings
+		this.version  = "0.3";
+		this.feed_url = "http://www.lipsum.com/feed/xml";
+		// defaults for instance variables
+		variables.instance = structnew();
+		variables.instance.start_with_lorem_ipsum = TRUE;
+		variables.instance.use_local_cache        = FALSE;
+		variables.instance.cache                  = structnew();
+	</cfscript>
 
 	<cffunction name="init" access="public" returntype="LoremIpsum" output="no" hint="Component initialisation">
-		<cfargument name="start_with_lorem_ipsum" type="boolean" required="no" default="TRUE" hint="Should the text start with 'Lorem Ipsum'">
+		<cfargument name="start_with_lorem_ipsum" type="boolean" required="no" default="TRUE" hint="Should the text start with 'Lorem Ipsum'?">
 		<cfargument name="use_local_cache" type="boolean" required="no" default="FALSE" hint="Cache same-type requests?">
 		<cfset variables.instance.start_with_lorem_ipsum = arguments.start_with_lorem_ipsum>
 		<cfset variables.instance.use_local_cache = arguments.use_local_cache>
@@ -50,7 +56,8 @@
 	<cffunction name="get_from_cache_or_remote" access="private" returntype="array" output="no" hint="">
 		<cfargument name="type" type="string" required="yes" hint="The request limit type (paras, words, bytes)">
 		<cfargument name="number_of" type="numeric" required="yes" hint="The limit of [type] to return">
-		<cfset var local = { cache_location = arguments.type & "_" & arguments.number_of }>
+		<cfset var local = structnew()>
+		<cfset local.cache_location = arguments.type & "_" & arguments.number_of>
 		<!--- if the request already exists in the cache then use that --->
 		<cfif variables.instance.use_local_cache AND structkeyexists(variables.instance.cache, local.cache_location)>
 			<cfreturn variables.instance.cache[local.cache_location]>
@@ -68,7 +75,8 @@
 	<cffunction name="get_from_remote" access="private" returntype="array" output="no" hint="Actually performs the request to grab the Lorem Ipsum text from the remote server">
 		<cfargument name="type" type="string" required="yes" hint="The request limit type (paras, words, bytes)">
 		<cfargument name="number_of" type="numeric" required="yes" hint="The limit of [type] to return">
-		<cfset var local = { request_uri = get_url(arguments.type, arguments.number_of) }>
+		<cfset var local = structnew()>
+		<cfset local.request_uri = get_url(arguments.type, arguments.number_of)>
 		<!--- grab the lipsum block --->
 		<cfhttp url="#local.request_uri#" method="get" result="local.request"></cfhttp>
 		<cfset local.lipsum = xmlparse(local.request.filecontent).feed.lipsum.xmltext>
