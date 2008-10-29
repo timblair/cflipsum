@@ -36,4 +36,4 @@ As a brief example, here's some basic timings with and without caching turned on
 
 # Download
 
-You can [download the component](http://github.com/timblaie/cflipsum/tree/master) from GitHub.  There is also a test file which gives other examples of basic usage, including caching.
+You can [download the component](http://github.com/timblair/cflipsum/tree/master) from GitHub.  There is also a test file which gives other examples of basic usage, including caching.
