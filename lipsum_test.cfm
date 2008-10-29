@@ -12,8 +12,8 @@
 --->
 
 <!--- two copies of the generator, one with caching and one without --->
-<cfset variable.generator_without_cache = createobject("component", "LoremIpsum").init(FALSE, FALSE)>
-<cfset variable.generator_with_cache    = createobject("component", "LoremIpsum").init(FALSE, TRUE)>
+<cfset variables.generator_without_cache = createobject("component", "LoremIpsum").init(FALSE, FALSE)>
+<cfset variables.generator_with_cache    = createobject("component", "LoremIpsum").init(FALSE, TRUE)>
 
 <!--- how many runs, what type, and over what range? --->
 <cfset variables.run = {
@@ -25,6 +25,7 @@
 
 <cfoutput>
 	<h1>Lorem Ipsum Testing</h1>
+	<p>Using LoremIpsum.cfc version #variables.generator_without_cache.version#</p>
 	<h3>Fetching #variables.run.loop# sets of between #variables.run.min# and #variables.run.max# #variables.run.type#
 </cfoutput>
 <cfflush>
@@ -37,7 +38,7 @@
 <cfset variables.without_tick_start = gettickcount()>
 <cfloop from="1" to="#variables.run.loop#" index="i">
 	<cfset variables.args = { number_of = randrange(variables.run.min, variables.run.max) }>
-	<cfinvoke component="#variable.generator_without_cache#" method="get_#variables.run.type#" argumentcollection="#variables.args#">
+	<cfinvoke component="#variables.generator_without_cache#" method="get_#variables.run.type#" argumentcollection="#variables.args#">
 </cfloop>
 <cfset variables.without_tick_end = gettickcount()>
 <cfoutput>done!</h4></cfoutput><cfflush>
@@ -47,7 +48,7 @@
 <cfset variables.with_tick_start = gettickcount()>
 <cfloop from="1" to="#variables.run.loop#" index="i">
 	<cfset variables.args = { number_of = randrange(variables.run.min, variables.run.max) }>
-	<cfinvoke component="#variable.generator_with_cache#" method="get_#variables.run.type#" argumentcollection="#variables.args#">
+	<cfinvoke component="#variables.generator_with_cache#" method="get_#variables.run.type#" argumentcollection="#variables.args#">
 </cfloop>
 <cfset variables.with_tick_end = gettickcount()>
 <cfoutput>done!</h4></cfoutput><cfflush>
